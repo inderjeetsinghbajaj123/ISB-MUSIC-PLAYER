@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+#range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+#range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: rgb(241, 232, 232);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
