@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <div className='w-full h-screen bg-black flex relative overflow-hidden'>
-      <FaCaretDown className={`absolute text-white top-5.5 left-[10%] text-[30px] md:hidden cursor-pointer ${arrow ? "-rotate-90" : ""}`}
+      <FaCaretDown className={`absolute text-white top-5.5 left-[1%] text-[30px] md:hidden cursor-pointer ${arrow ? "-rotate-90" : ""}`}
        onClick={() => setarrow(prev => !prev)} />
       {!arrow ? <>
         <div className='md:w-1/2 w-full h-full pt-5 md:pt-30 flex flex-col justify-start items-center gap-6 '>

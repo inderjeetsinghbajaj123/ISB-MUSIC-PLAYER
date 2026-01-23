@@ -14,7 +14,7 @@ const Player = () => {
           <img src={songsData[index].image} alt="" className='w-15 max-h-15 md:h-20  md:max-h-25 md:w-20 rounded-lg object-fill ' />
         </div>
         <div className='text-[20px] md:text-[25px] '>
-          <div className='text-black text-[1.1em] font-semibold'>{songsData[index].image}</div>
+          <div className='text-black text-[1.1em] font-semibold'>{songsData[index].name}</div>
           <div className='text-gray-800 text-[0.6em]  font-semibold'> {songsData[index].singer}</div>
         </div>
       </div>
