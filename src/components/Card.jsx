@@ -1,57 +1,182 @@
-import React, { useContext } from 'react'
-import { songsData } from '../content'
-import { MdPlaylistAdd } from "react-icons/md";
-import { IoHeartOutline } from "react-icons/io5";
-import { datacontext } from '../context/UserContext';
-import { useDispatch, useSelector } from 'react-redux';
-import { MdOutlinePlaylistRemove } from "react-icons/md";
-import { AddSong, RemoveSong } from '../redux/PlaylistSlice';
-import { AddLiked, RemoveLiked } from '../redux/LikedSlice';
-import { IoHeartSharp } from "react-icons/io5";
+import React, { useContext } from "react";
+import { MdPlaylistAdd, MdOutlinePlaylistRemove } from "react-icons/md";
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 
+import { datacontext } from "../context/UserContext";
+import { useDispatch, useSelector } from "react-redux";
 
+import { AddSong, RemoveSong } from "../redux/PlaylistSlice";
+
+import { AddLiked, RemoveLiked } from "../redux/LikedSlice";
 
 const Card = ({ name, image, singer, songIndex }) => {
-    let { playsong, index, setindex } = useContext(datacontext)
-    let dispatch = useDispatch()
-    let sng = useSelector(state => state.playlist)
-    const songalreadyexist = sng.some((song) => song.songIndex === songIndex)
-    let likedsng = useSelector(state => state.liked)
-    const songalreadyliked = likedsng.some((song) => song.songIndex === songIndex)
-    return (
-        <div className='w-[90%] h-17.5 md:h-30 bg-gray-600 rounded-lg p-1.25 md:p-2.5 flex justify-center items-center hover:bg-gray-500 transition-all '>
-            <div className='flex justify-start items-center gap-5 w-[70%] h-full cursor-pointer ' onClick={() => {
-                setindex(songIndex)
-                playsong()
-            }}>
-                <div>
-                    <img src={image} alt="" className='w-15 max-h-15 md:max-h-25 md:w-25 rounded-lg  ' />
-                </div>
-                <div className='text-[15px] md:text-[20px] '>
-                    <div className='text-white text-[1.1em] font-semibold'>{name}</div>
-                    <div className='text-gray-400 text-[0.7em]  font-semibold'> {singer}</div>
+  const { playsong, index, setindex } = useContext(datacontext);
 
-                </div>
+  const dispatch = useDispatch();
+
+  // Redux playlist state
+  const playlistSongs = useSelector((state) => state.playlist);
+
+  // Redux liked songs state
+  const likedSongs = useSelector((state) => state.liked);
+
+  const songAlreadyExists = playlistSongs.some(
+    (song) => song.songIndex === songIndex,
+  );
+
+  const songAlreadyLiked = likedSongs.some(
+    (song) => song.songIndex === songIndex,
+  );
+
+  const isCurrentPlaying = index === songIndex;
+
+  // Play selected song
+  const handlePlay = () => {
+    setindex(songIndex);
+    playsong();
+  };
+
+  // Add / Remove playlist
+  const handlePlaylist = (e) => {
+    e.stopPropagation();
+
+    if (songAlreadyExists) {
+      dispatch(RemoveSong(songIndex));
+    } else {
+      dispatch(
+        AddSong({
+          name,
+          image,
+          singer,
+          songIndex,
+        }),
+      );
+    }
+  };
+
+  // Add / Remove liked song
+  const handleLike = (e) => {
+    e.stopPropagation();
+
+    if (songAlreadyLiked) {
+      dispatch(RemoveLiked(songIndex));
+    } else {
+      dispatch(
+        AddLiked({
+          name,
+          image,
+          singer,
+          songIndex,
+        }),
+      );
+    }
+  };
+
+  return (
+    <div
+      className={`w-full min-h-[76px] md:min-h-[92px] px-3 md:px-4 py-3 rounded-2xl flex justify-between items-center gap-3 border cursor-pointer transition-all duration-300 ${
+        isCurrentPlaying
+          ? "bg-[#263C32] border-[#263C32] shadow-md"
+          : "bg-[#EAE6DB] border-[#DED8CB] hover:bg-[#E5DED0] hover:shadow-md"
+      }`}
+    >
+      {/* Song information */}
+      <div
+        onClick={handlePlay}
+        className="flex items-center gap-3 md:gap-4 flex-1 min-w-0 h-full"
+      >
+        {/* Album image */}
+        <div className="relative flex-shrink-0 overflow-hidden rounded-xl">
+          <img
+            src={image}
+            alt={name}
+            className="w-12 h-12 md:w-16 md:h-16 object-cover"
+          />
+
+          {isCurrentPlaying && (
+            <div className="absolute inset-0 bg-[#263C32]/45 flex items-center justify-center">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#D58B68] animate-pulse" />
             </div>
-            <div className='flex justify-center items-center gap-5 w-[30%] h-full text-[15px] md:text-[20px]  '>
-                {!songalreadyexist && (<div className='' onClick={() => { dispatch(AddSong({ name: name, image: image, singer: singer, songIndex: songIndex })) }}>
-                    <MdPlaylistAdd className='text-white text-[1.5em] cursor-pointer' />
-                </div>)}
-
-                {songalreadyexist && (<div className='' onClick={() => { dispatch(RemoveSong(songIndex)) }}>
-                    <MdOutlinePlaylistRemove
-                        className='text-white text-[1.5em] cursor-pointer' />
-                </div>)}
-                {!songalreadyliked && (<div onClick={() => { dispatch(AddLiked({ name: name, image: image, singer: singer, songIndex: songIndex })) }}>
-                    <IoHeartOutline className='text-white text-[1.3em] cursor-pointer' />
-                </div>)}
-                {songalreadyliked && (<div onClick={() => { dispatch(RemoveLiked(songIndex)) }}>
-                    <IoHeartSharp className='text-white text-[1.3em] cursor-pointer' />
-                </div>)}
-
-            </div>
+          )}
         </div>
-    )
-}
 
-export default Card
+        {/* Song name and artist */}
+        <div className="flex flex-col justify-center min-w-0">
+          <h3
+            className={`text-sm md:text-base font-bold truncate transition-colors ${
+              isCurrentPlaying ? "text-[#F3EFE5]" : "text-[#263C32]"
+            }`}
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+            }}
+          >
+            {name}
+          </h3>
+
+          <p
+            className={`text-[11px] md:text-xs truncate mt-1 ${
+              isCurrentPlaying ? "text-[#C2C8BE]" : "text-[#999487]"
+            }`}
+          >
+            {singer}
+          </p>
+
+          {isCurrentPlaying && (
+            <span className="text-[9px] uppercase tracking-wider font-bold text-[#D58B68] mt-1">
+              Now playing
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Action buttons */}
+      <div className="flex items-center justify-end gap-1 md:gap-3 flex-shrink-0">
+        {/* Playlist button */}
+        <button
+          type="button"
+          title={songAlreadyExists ? "Remove from playlist" : "Add to playlist"}
+          aria-label={
+            songAlreadyExists ? "Remove from playlist" : "Add to playlist"
+          }
+          onClick={handlePlaylist}
+          className={`w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all ${
+            songAlreadyExists
+              ? "text-[#D58B68] bg-[#D58B68]/10"
+              : isCurrentPlaying
+                ? "text-[#D9DCD4] hover:bg-white/10"
+                : "text-[#858276] hover:bg-[#DCD5C6] hover:text-[#263C32]"
+          }`}
+        >
+          {songAlreadyExists ? (
+            <MdOutlinePlaylistRemove className="text-xl md:text-2xl" />
+          ) : (
+            <MdPlaylistAdd className="text-xl md:text-2xl" />
+          )}
+        </button>
+
+        {/* Like button */}
+        <button
+          type="button"
+          title={songAlreadyLiked ? "Unlike song" : "Like song"}
+          aria-label={songAlreadyLiked ? "Unlike song" : "Like song"}
+          onClick={handleLike}
+          className={`w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all ${
+            songAlreadyLiked
+              ? "text-[#D58B68] bg-[#D58B68]/10"
+              : isCurrentPlaying
+                ? "text-[#D9DCD4] hover:text-[#D58B68] hover:bg-white/10"
+                : "text-[#858276] hover:text-[#C46B48] hover:bg-[#DCD5C6]"
+          }`}
+        >
+          {songAlreadyLiked ? (
+            <IoHeartSharp className="text-lg md:text-xl" />
+          ) : (
+            <IoHeartOutline className="text-lg md:text-xl" />
+          )}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Card;
