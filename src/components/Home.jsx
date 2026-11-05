@@ -33,7 +33,6 @@ const formatTime = (seconds) => {
 };
 
 const Home = () => {
-  // Audio context
   const {
     nextsong,
     prevsong,
@@ -45,11 +44,9 @@ const Home = () => {
     setindex,
   } = useContext(datacontext);
 
-  // Redux
   const dispatch = useDispatch();
   const likedSongs = useSelector((state) => state.liked);
 
-  // Local states
   const [range, setRange] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
@@ -59,12 +56,10 @@ const Home = () => {
   const [durationFormatted, setDurationFormatted] = useState("0:00");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Current song
   const currentSong = songsData[index] || songsData[0];
 
   const isLiked = likedSongs.some((song) => song.songIndex === index);
 
-  // Filter songs
   const filteredSongs = songsData.filter((song) => {
     const query = searchQuery.toLowerCase().trim();
 
@@ -74,7 +69,6 @@ const Home = () => {
     );
   });
 
-  // Update playback progress
   useEffect(() => {
     const audio = audioRef.current;
 
@@ -103,14 +97,12 @@ const Home = () => {
     };
   }, [audioRef]);
 
-  // Repeat current song
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.loop = isRepeat;
     }
   }, [isRepeat, audioRef]);
 
-  // Seek
   const handleSeek = (e) => {
     const value = Number(e.target.value);
 
@@ -123,7 +115,6 @@ const Home = () => {
     }
   };
 
-  // Volume
   const handleVolumeChange = (e) => {
     const value = Number(e.target.value);
 
@@ -135,7 +126,6 @@ const Home = () => {
     }
   };
 
-  // Mute
   const toggleMute = () => {
     const audio = audioRef.current;
 
@@ -153,7 +143,6 @@ const Home = () => {
     }
   };
 
-  // Shuffle
   const handleNext = () => {
     if (isShuffle && songsData.length > 1) {
       let randomIndex;
@@ -169,7 +158,6 @@ const Home = () => {
     }
   };
 
-  // Select song
   const handleSongSelect = (song) => {
     const songIndex = songsData.findIndex((item) => item.id === song.id);
 
@@ -179,7 +167,6 @@ const Home = () => {
     }
   };
 
-  // Like / Unlike
   const toggleLike = () => {
     if (isLiked) {
       dispatch(RemoveLiked(index));
@@ -204,10 +191,7 @@ const Home = () => {
   }
 
   return (
-    // IMPORTANT: No md:ml-[250px] here.
-    // App.jsx already applies the sidebar offset.
     <main className="relative w-full min-h-screen bg-[#F3EFE5] text-[#263C32] overflow-x-hidden px-5 md:px-9 lg:px-12 pt-7 pb-36">
-      {/* HEADER */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 mb-12">
         <div>
           <p className="text-[#C46B48] text-[10px] font-bold tracking-[2.5px] uppercase mb-2">
@@ -223,7 +207,6 @@ const Home = () => {
           </h1>
         </div>
 
-        {/* Search */}
         <div className="relative w-full sm:w-72">
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999487] text-xs" />
 
@@ -237,7 +220,6 @@ const Home = () => {
         </div>
       </header>
 
-      {/* FEATURED SECTION */}
       {!searchQuery && (
         <section className="mb-14">
           <div className="flex justify-between items-end mb-5">
@@ -260,7 +242,6 @@ const Home = () => {
           </div>
 
           <div className="relative bg-[#263C32] rounded-[24px] overflow-hidden flex flex-col md:flex-row items-center gap-7 md:gap-10 p-6 md:p-9 shadow-[0_12px_35px_rgba(38,60,50,0.12)]">
-            {/* Album artwork */}
             <div className="w-full max-w-[260px] md:w-[260px] flex-shrink-0">
               <div className="aspect-square rounded-xl overflow-hidden shadow-xl">
                 <img
@@ -271,7 +252,6 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Song details */}
             <div className="flex-1 w-full">
               <div className="flex items-center gap-2 mb-5">
                 <span className="w-2 h-2 rounded-full bg-[#D58B68]" />
@@ -335,7 +315,6 @@ const Home = () => {
         </section>
       )}
 
-      {/* MUSIC COLLECTION */}
       <section className="mb-12">
         <div className="flex justify-between items-end mb-7">
           <div>
@@ -356,7 +335,6 @@ const Home = () => {
           </span>
         </div>
 
-        {/* No results */}
         {filteredSongs.length === 0 ? (
           <div className="py-16 text-center border border-[#DED9CD] rounded-2xl bg-[#EAE6DB]">
             <FaSearch className="text-[#B0AA9D] text-2xl mx-auto mb-4" />
@@ -388,7 +366,6 @@ const Home = () => {
                   onClick={() => handleSongSelect(song)}
                   className="group min-w-0 cursor-pointer"
                 >
-                  {/* Album artwork */}
                   <div className="relative aspect-square overflow-hidden rounded-xl bg-[#E3DED1] shadow-[0_5px_15px_rgba(38,60,50,0.06)]">
                     <img
                       src={song.image}
@@ -397,10 +374,8 @@ const Home = () => {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
 
-                    {/* Hover overlay */}
                     <div className="absolute inset-0 bg-[#263C32]/0 group-hover:bg-[#263C32]/25 transition-colors duration-300" />
 
-                    {/* Play button */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -416,7 +391,6 @@ const Home = () => {
                       )}
                     </button>
 
-                    {/* Liked indicator */}
                     {songIsLiked && (
                       <div className="absolute top-3 right-3 text-white drop-shadow-md">
                         <FaHeartSolid className="text-sm" />
@@ -424,7 +398,6 @@ const Home = () => {
                     )}
                   </div>
 
-                  {/* Track information */}
                   <div className="pt-3">
                     <h3
                       className={`text-sm font-bold truncate transition-colors ${
@@ -456,10 +429,8 @@ const Home = () => {
         )}
       </section>
 
-      {/* MUSIC PLAYER */}
       <div className="fixed bottom-3 left-3 right-3 md:left-[262px] z-50 rounded-xl bg-[#263C32] text-[#F3EFE5] shadow-[0_8px_30px_rgba(38,60,50,0.25)] px-3 md:px-5 py-3">
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-5">
-          {/* Current track */}
           <div className="flex items-center gap-3 w-full md:w-[25%] min-w-0">
             <img
               src={currentSong.image}
@@ -490,10 +461,8 @@ const Home = () => {
             </button>
           </div>
 
-          {/* Player controls */}
           <div className="flex flex-col items-center gap-2 w-full md:w-[50%] max-w-xl">
             <div className="flex items-center justify-center gap-6">
-              {/* Shuffle */}
               <button
                 onClick={() => setIsShuffle((prev) => !prev)}
                 className={`text-xs ${
@@ -507,7 +476,6 @@ const Home = () => {
                 <FaRandom />
               </button>
 
-              {/* Previous */}
               <button
                 onClick={prevsong}
                 className="text-[#B8C1B5] hover:text-white transition-colors"
@@ -516,7 +484,6 @@ const Home = () => {
                 <MdOutlineSkipPrevious className="text-2xl" />
               </button>
 
-              {/* Play / Pause */}
               <button
                 onClick={() => (playingsong ? pausesong() : playsong())}
                 className="w-10 h-10 rounded-full bg-[#F3EFE5] text-[#263C32] flex items-center justify-center hover:bg-white hover:scale-105 transition-all"
@@ -529,7 +496,6 @@ const Home = () => {
                 )}
               </button>
 
-              {/* Next */}
               <button
                 onClick={handleNext}
                 className="text-[#B8C1B5] hover:text-white transition-colors"
@@ -538,7 +504,6 @@ const Home = () => {
                 <MdOutlineSkipNext className="text-2xl" />
               </button>
 
-              {/* Repeat */}
               <button
                 onClick={() => setIsRepeat((prev) => !prev)}
                 className={`text-xs ${
@@ -553,7 +518,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Track progress */}
             <div className="w-full flex items-center gap-3">
               <span className="text-[9px] text-[#B8C1B5] tabular-nums">
                 {currentTimeFormatted}
@@ -577,7 +541,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Volume */}
           <div className="hidden md:flex items-center justify-end gap-3 w-[25%]">
             <FaHeadphones className="text-[#B8C1B5] text-sm" />
 

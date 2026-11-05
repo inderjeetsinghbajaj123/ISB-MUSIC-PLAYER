@@ -11,10 +11,8 @@ function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen w-full bg-[#F3EFE5] text-[#263C32]">
-        {/* Fixed sidebar */}
         <Sidebar />
 
-        {/* Main content - sidebar offset applied only once */}
         <main className="min-h-screen min-w-0 w-full bg-[#F3EFE5] md:ml-[250px] md:w-[calc(100%-250px)]">
           <Routes>
             <Route path="/" element={<Home />} />

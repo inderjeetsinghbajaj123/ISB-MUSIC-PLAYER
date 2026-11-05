@@ -8,10 +8,8 @@ const Like = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-[#F3EFE5] text-[#263C32] px-5 md:px-9 lg:px-12 pt-8 pb-36 overflow-x-hidden">
-      {/* Player */}
       <Player />
 
-      {/* Header */}
       <header className="mb-12">
         <p className="text-[#C46B48] text-[10px] font-bold uppercase tracking-[2.5px] mb-3">
           YOUR PERSONAL SOUNDTRACK
@@ -37,7 +35,6 @@ const Like = () => {
         </div>
       </header>
 
-      {/* Favourite Songs */}
       <section>
         <div className="mb-6">
           <p className="text-[#9C988B] text-[10px] font-bold uppercase tracking-[2px] mb-2">

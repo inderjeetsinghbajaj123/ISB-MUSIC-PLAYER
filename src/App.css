@@ -2,7 +2,6 @@
 
 @import "tailwindcss";
 
-/* Global layout */
 * {
   box-sizing: border-box;
 }
@@ -22,14 +21,12 @@ body {
   overflow-x: hidden;
 }
 
-/* Headings */
 h1,
 h2,
 h3 {
   font-family: "Playfair Display", Georgia, serif;
 }
 
-/* Range input */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -72,7 +69,6 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 0 8px rgba(243, 239, 229, 0.35);
 }
 
-/* Scrollbar */
 * {
   scrollbar-width: thin;
   scrollbar-color: #c8bfaf #f3efe5;
@@ -96,7 +92,6 @@ input[type="range"]::-moz-range-thumb {
   background: #a69b89;
 }
 
-/* Small screen support */
 @media (max-width: 767px) {
   body {
     overflow-x: hidden;

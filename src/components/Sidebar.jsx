@@ -25,7 +25,6 @@ const Sidebar = () => {
 
   return (
     <aside className="fixed left-0 top-0 z-50 flex h-screen w-[250px] flex-col border-r border-[#DED8CB] bg-[#F3EFE5] px-5 py-7">
-      {/* Logo */}
       <div className="mb-12 px-2">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#263C32] text-[#F3EFE5]">
@@ -46,7 +45,6 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Discover */}
       <div className="mb-9">
         <p className="mb-4 px-4 text-[10px] font-bold uppercase tracking-[2.5px] text-[#A29B8E]">
           Discover
@@ -67,7 +65,6 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Collection */}
       <div>
         <p className="mb-4 px-4 text-[10px] font-bold uppercase tracking-[2.5px] text-[#A29B8E]">
           Your Collection
@@ -83,7 +80,6 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Reminder */}
       <div className="relative mt-12 overflow-hidden rounded-2xl bg-[#E5DED0] p-5">
         <div className="absolute -right-5 -top-5 h-24 w-24 rounded-full bg-[#D4C7B2] opacity-50" />
 
@@ -113,7 +109,6 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Profile */}
       <div className="mt-auto border-t border-[#DED8CB] pt-5">
         <div className="flex items-center gap-3 px-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#C46B48] text-sm font-bold text-white">

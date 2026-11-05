@@ -22,10 +22,8 @@ const Search = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-[#F3EFE5] text-[#263C32] px-5 md:px-9 lg:px-12 pt-8 pb-36 overflow-x-hidden">
-      {/* Player */}
       <Player />
 
-      {/* Header */}
       <header className="mb-12">
         <p className="text-[#C46B48] text-[10px] font-bold uppercase tracking-[2.5px] mb-3">
           FIND YOUR NEXT FAVOURITE
@@ -43,7 +41,6 @@ const Search = () => {
         </p>
       </header>
 
-      {/* Search Input */}
       <section className="mb-12">
         <form
           onSubmit={(e) => e.preventDefault()}
@@ -72,7 +69,6 @@ const Search = () => {
         </form>
       </section>
 
-      {/* Search Results */}
       <section>
         <div className="flex items-end justify-between mb-7">
           <div>

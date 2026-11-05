@@ -14,10 +14,8 @@ const Card = ({ name, image, singer, songIndex }) => {
 
   const dispatch = useDispatch();
 
-  // Redux playlist state
   const playlistSongs = useSelector((state) => state.playlist);
 
-  // Redux liked songs state
   const likedSongs = useSelector((state) => state.liked);
 
   const songAlreadyExists = playlistSongs.some(
@@ -30,13 +28,11 @@ const Card = ({ name, image, singer, songIndex }) => {
 
   const isCurrentPlaying = index === songIndex;
 
-  // Play selected song
   const handlePlay = () => {
     setindex(songIndex);
     playsong();
   };
 
-  // Add / Remove playlist
   const handlePlaylist = (e) => {
     e.stopPropagation();
 
@@ -54,7 +50,6 @@ const Card = ({ name, image, singer, songIndex }) => {
     }
   };
 
-  // Add / Remove liked song
   const handleLike = (e) => {
     e.stopPropagation();
 
@@ -80,12 +75,10 @@ const Card = ({ name, image, singer, songIndex }) => {
           : "bg-[#EAE6DB] border-[#DED8CB] hover:bg-[#E5DED0] hover:shadow-md"
       }`}
     >
-      {/* Song information */}
       <div
         onClick={handlePlay}
         className="flex items-center gap-3 md:gap-4 flex-1 min-w-0 h-full"
       >
-        {/* Album image */}
         <div className="relative flex-shrink-0 overflow-hidden rounded-xl">
           <img
             src={image}
@@ -100,7 +93,6 @@ const Card = ({ name, image, singer, songIndex }) => {
           )}
         </div>
 
-        {/* Song name and artist */}
         <div className="flex flex-col justify-center min-w-0">
           <h3
             className={`text-sm md:text-base font-bold truncate transition-colors ${
@@ -129,9 +121,7 @@ const Card = ({ name, image, singer, songIndex }) => {
         </div>
       </div>
 
-      {/* Action buttons */}
       <div className="flex items-center justify-end gap-1 md:gap-3 flex-shrink-0">
-        {/* Playlist button */}
         <button
           type="button"
           title={songAlreadyExists ? "Remove from playlist" : "Add to playlist"}
@@ -154,7 +144,6 @@ const Card = ({ name, image, singer, songIndex }) => {
           )}
         </button>
 
-        {/* Like button */}
         <button
           type="button"
           title={songAlreadyLiked ? "Unlike song" : "Like song"}

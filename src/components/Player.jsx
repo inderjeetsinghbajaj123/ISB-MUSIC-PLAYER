@@ -8,7 +8,6 @@ import { FaPlay, FaPause } from "react-icons/fa";
 const Player = () => {
   const { playingsong, playsong, pausesong, index } = useContext(datacontext);
 
-  // Prevent errors if the selected index is invalid
   const currentSong = songsData[index] || songsData[0];
 
   if (!currentSong) {
@@ -17,9 +16,7 @@ const Player = () => {
 
   return (
     <div className="fixed bottom-3 left-3 right-3 md:left-[262px] z-50 min-h-[76px] md:min-h-[86px] bg-[#263C32] text-[#F3EFE5] rounded-xl shadow-[0_8px_30px_rgba(38,60,50,0.25)] px-3 md:px-5 py-3 flex items-center justify-between gap-3">
-      {/* Current song information */}
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        {/* Album artwork */}
         <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden flex-shrink-0">
           <img
             src={currentSong.image}
@@ -28,7 +25,6 @@ const Player = () => {
           />
         </div>
 
-        {/* Track details */}
         <div className="flex flex-col min-w-0">
           <h3
             className="text-xs md:text-sm font-bold truncate text-[#F3EFE5]"
@@ -45,7 +41,6 @@ const Player = () => {
         </div>
       </div>
 
-      {/* Playback controls */}
       <div className="flex items-center justify-end flex-shrink-0">
         <button
           type="button"
