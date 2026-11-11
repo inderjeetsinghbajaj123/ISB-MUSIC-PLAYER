@@ -50,20 +50,20 @@ const Home = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-black flex relative overflow-hidden">
+    <div className="w-full h-dvh bg-black flex relative overflow-hidden">
       <FaCaretDown
         className={`absolute text-white top-5.5 left-[1%] text-[30px] md:hidden cursor-pointer z-40 transition-transform ${arrow ? "-rotate-90" : ""}`}
         onClick={() => setarrow((prev) => !prev)}
       />
       {!arrow ? (
         <>
-          <div className="md:w-1/2 w-full h-full pt-5 md:pt-30 flex flex-col justify-start items-center gap-6 ">
-            <h1 className="text-white font-bold text-[20px]">
+          <div className="md:w-1/2 w-full h-full pt-14 sm:pt-18 md:pt-30 pb-32 md:pb-0 flex flex-col justify-start items-center gap-3 sm:gap-6">
+            <h1 className="text-white font-bold text-sm sm:text-base md:text-[20px] text-center px-10 sm:px-0">
               Made with ❤️ by INDERJEET
             </h1>
 
             {/* Rotating Vinyl Record Artwork */}
-            <div className="w-[80%] max-w-62.5 h-62.5 object-fill relative rounded-full overflow-hidden shadow-2xl">
+            <div className="w-52 h-52 sm:w-62.5 sm:h-62.5 max-w-[75vw] max-h-[75vw] object-fill relative rounded-full overflow-hidden shadow-2xl shrink-0">
               <img
                 src={songsData[index].image}
                 alt=""
@@ -81,16 +81,16 @@ const Home = () => {
             </div>
 
             <div>
-              <div className="text-white text-[30px] font-bold text-center">
+              <div className="text-white text-2xl sm:text-[30px] font-bold text-center px-4 break-words">
                 {songsData[index].name}
               </div>
-              <div className="text-gray-300 text-[18px] text-center">
+              <div className="text-gray-300 text-base sm:text-[18px] text-center px-4">
                 {songsData[index].singer}
               </div>
             </div>
 
             {/* Custom Styled Audio Range Slider matching Player bar */}
-            <div className="w-1/2 flex justify-center items-center relative rounded-md">
+            <div className="w-[75%] md:w-1/2 flex justify-center items-center relative rounded-md">
               <input
                 type="range"
                 className="appearance-none w-full h-1.75 rounded-md bg-zinc-700 accent-white cursor-pointer"
@@ -143,8 +143,8 @@ const Home = () => {
         </>
       ) : (
         /* Mobile Expanded View matching clean white mini-player bar design */
-        <div className="flex items-center flex-col gap-4 w-full md:w-[50%] mt-12 overflow-auto pb-36 h-[85%] relative px-3">
-          <div className="w-full bg-white text-black rounded-3xl p-4 shadow-2xl flex items-center justify-between mb-2">
+        <div className="flex items-center flex-col gap-3 w-full md:w-[50%] mt-12 h-[calc(100%-3rem)] min-h-0 overflow-auto pb-32 relative px-3">
+          <div className="w-full bg-white text-black rounded-3xl p-3 sm:p-4 shadow-2xl flex items-center justify-between mb-1 shrink-0">
             <div className="flex items-center gap-3">
               <img
                 src={songsData[index].image}

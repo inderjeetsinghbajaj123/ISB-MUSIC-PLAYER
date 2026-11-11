@@ -65,13 +65,13 @@ const Playlist = () => {
   );
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-neutral-950 via-black to-neutral-950 flex flex-col justify-start pt-6 md:pt-28 items-center gap-8 overflow-auto pb-48 text-white">
+    <div className="w-full min-h-dvh bg-gradient-to-b from-neutral-950 via-black to-neutral-950 flex flex-col justify-start pt-5 sm:pt-6 md:pt-28 items-center gap-5 md:gap-8 overflow-auto pb-36 md:pb-48 text-white">
       <Player />
 
-      <div className="w-[92%] md:w-[70%] flex flex-col items-center gap-8">
+      <div className="w-[calc(100%-1.5rem)] sm:w-[92%] md:w-[70%] flex flex-col items-center gap-5 md:gap-8">
         {/* Glassmorphism Header Bar */}
-        <div className="w-full flex justify-between items-center bg-white/[0.03] border border-white/10 px-6 py-5 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl">
-          <div className="flex items-center gap-3">
+        <div className="w-full flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 bg-white/[0.03] border border-white/10 px-4 sm:px-6 py-4 sm:py-5 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl">
+          <div className="flex items-center gap-3 min-w-0">
             <div className="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-500 shadow-inner">
               <MdFolderSpecial className="w-6 h-6" />
             </div>
@@ -86,7 +86,7 @@ const Playlist = () => {
           </div>
           <button
             onClick={() => setIsCreatingModal(true)}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white px-5 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer shadow-[0_4px_20px_rgba(244,63,94,0.4)] hover:scale-[1.02] active:scale-95"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white w-full sm:w-auto px-4 sm:px-5 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer shadow-[0_4px_20px_rgba(244,63,94,0.4)] hover:scale-[1.02] active:scale-95"
           >
             <MdAdd className="w-5 h-5" /> New Playlist
           </button>
@@ -94,7 +94,7 @@ const Playlist = () => {
 
         {/* Floating Modal / Creator Box */}
         {isCreatingModal && (
-          <div className="w-full bg-neutral-900/90 border border-rose-500/30 p-6 rounded-3xl flex flex-col gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl animate-fadeIn">
+          <div className="w-full bg-neutral-900/90 border border-rose-500/30 p-4 sm:p-6 rounded-3xl flex flex-col gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl animate-fadeIn">
             <div className="flex justify-between items-center">
               <h2 className="text-white font-bold text-lg">
                 Create New Playlist Folder
@@ -139,7 +139,7 @@ const Playlist = () => {
 
         {/* Song Assignment Panel */}
         {songToAssign && customPlaylists.length > 0 && (
-          <div className="w-full bg-rose-950/20 border border-rose-500/40 p-6 rounded-3xl flex flex-col gap-4 shadow-2xl backdrop-blur-xl animate-fadeIn">
+          <div className="w-full bg-rose-950/20 border border-rose-500/40 p-4 sm:p-6 rounded-3xl flex flex-col gap-4 shadow-2xl backdrop-blur-xl animate-fadeIn">
             <div className="flex justify-between items-center">
               <h3 className="text-white font-medium text-sm">
                 Add{" "}
@@ -220,7 +220,7 @@ const Playlist = () => {
 
         {/* Active Playlist Expanded Detailed View */}
         {selectedPlaylistId !== null && activePlaylist && (
-          <div className="w-full bg-neutral-900/80 border border-rose-500/40 p-6 rounded-3xl flex flex-col gap-5 shadow-[0_15px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl animate-fadeIn">
+          <div className="w-full bg-neutral-900/80 border border-rose-500/40 p-3 sm:p-6 rounded-3xl flex flex-col gap-5 shadow-[0_15px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl animate-fadeIn">
             <div className="flex justify-between items-center border-b border-white/10 pb-4">
               <div className="flex items-center gap-3">
                 <div className="p-3 rounded-2xl bg-rose-500 text-white font-bold text-lg">
@@ -283,7 +283,7 @@ const Playlist = () => {
               {songs.map((song) => (
                 <div
                   key={song.songIndex}
-                  className="w-full flex justify-between items-center bg-neutral-900/40 hover:bg-neutral-900/70 border border-white/5 p-3 rounded-3xl shadow-lg transition-all gap-4 backdrop-blur-sm"
+                  className="w-full flex flex-col sm:flex-row justify-between items-stretch sm:items-center bg-neutral-900/40 hover:bg-neutral-900/70 border border-white/5 p-2 sm:p-3 rounded-3xl shadow-lg transition-all gap-2 sm:gap-4 backdrop-blur-sm"
                 >
                   <div className="flex-1">
                     <Card
@@ -296,7 +296,7 @@ const Playlist = () => {
                   {customPlaylists.length > 0 && (
                     <button
                       onClick={() => setSongToAssign(song)}
-                      className="bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/30 px-4 py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer shrink-0 shadow-sm flex items-center gap-1.5"
+                      className="bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/30 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer sm:shrink-0 shadow-sm flex items-center justify-center gap-1.5"
                     >
                       <MdAdd className="w-4 h-4" /> Add to Playlist
                     </button>

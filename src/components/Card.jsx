@@ -20,14 +20,14 @@ const Card = ({ name, image, singer, songIndex }) => {
 
   return (
     <div
-      className={`w-[92%] md:w-[90%] h-20 md:h-24 rounded-2xl px-4 py-2.5 flex justify-between items-center transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1 bg-gradient-to-r from-white/[0.05] via-white/[0.02] to-white/[0.04] backdrop-blur-xl border ${
+      className={`w-full min-w-0 min-h-18 sm:min-h-20 md:min-h-24 rounded-2xl px-2.5 sm:px-4 py-2 flex justify-between items-center gap-2 transition-all duration-300 hover:scale-[1.01] hover:-translate-y-1 bg-gradient-to-r from-white/[0.05] via-white/[0.02] to-white/[0.04] backdrop-blur-xl border ${
         isCurrentPlaying
           ? "border-rose-500 shadow-[0_0_25px_rgba(244,63,94,0.35)] bg-white/[0.08]"
           : "border-white/10 hover:border-rose-500/50 hover:shadow-[0_10px_30px_rgba(244,63,94,0.15)]"
       }`}
     >
       <div
-        className="flex justify-start items-center gap-4 w-[72%] h-full cursor-pointer group"
+        className="flex justify-start items-center gap-2.5 sm:gap-4 flex-1 min-w-0 h-full cursor-pointer group"
         onClick={() => {
           setindex(songIndex);
           playsong();
@@ -46,7 +46,7 @@ const Card = ({ name, image, singer, songIndex }) => {
           )}
         </div>
 
-        <div className="flex flex-col justify-center truncate pr-2">
+        <div className="flex flex-col justify-center truncate min-w-0 pr-1 sm:pr-2">
           <div
             className={`text-sm md:text-base font-bold truncate transition-colors ${isCurrentPlaying ? "text-rose-400" : "text-white group-hover:text-rose-400"}`}
           >
@@ -58,10 +58,10 @@ const Card = ({ name, image, singer, songIndex }) => {
         </div>
       </div>
 
-      <div className="flex justify-end items-center gap-3 w-[25%] h-full text-white/70">
+      <div className="flex justify-end items-center gap-1 sm:gap-2 md:gap-3 shrink-0 h-full text-white/70">
         {!songalreadyexist ? (
           <button
-            className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:text-white transition-all cursor-pointer shadow-sm"
+            className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:text-white transition-all cursor-pointer shadow-sm"
             onClick={() => {
               dispatch(AddSong({ name, image, singer, songIndex }));
             }}
@@ -71,7 +71,7 @@ const Card = ({ name, image, singer, songIndex }) => {
           </button>
         ) : (
           <button
-            className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 transition-all cursor-pointer shadow-sm"
+            className="p-2 sm:p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 transition-all cursor-pointer shadow-sm"
             onClick={() => {
               dispatch(RemoveSong(songIndex));
             }}
@@ -83,7 +83,7 @@ const Card = ({ name, image, singer, songIndex }) => {
 
         {!songalreadyliked ? (
           <button
-            className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:text-rose-400 transition-all cursor-pointer shadow-sm"
+            className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:text-rose-400 transition-all cursor-pointer shadow-sm"
             onClick={() => {
               dispatch(AddLiked({ name, image, singer, songIndex }));
             }}
@@ -93,7 +93,7 @@ const Card = ({ name, image, singer, songIndex }) => {
           </button>
         ) : (
           <button
-            className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 hover:bg-rose-500/20 transition-all cursor-pointer shadow-sm"
+            className="p-2 sm:p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 hover:bg-rose-500/20 transition-all cursor-pointer shadow-sm"
             onClick={() => {
               dispatch(RemoveLiked(songIndex));
             }}
