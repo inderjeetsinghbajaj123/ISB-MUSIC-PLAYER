@@ -2,42 +2,66 @@ import React, { useContext } from "react";
 import { datacontext } from "../context/UserContext";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
+import { MdOutlineSkipPrevious } from "react-icons/md";
+import { GiNextButton } from "react-icons/gi";
 import { songsData } from "../content";
 
 const Player = () => {
-  let { playingsong, playsong, pausesong, index } = useContext(datacontext);
+  let { playingsong, playsong, pausesong, nextsong, prevsong, index } =
+    useContext(datacontext);
+
+  if (!songsData || !songsData[index]) return null;
+
   return (
-    <div className="w-full md:w-[60%] h-25 bg-white fixed bottom-13.75 md:bottom-0 rounded-t-[30px] shadow-lg flex pt-2.5 md:items-center md:p-4 z-50">
-      <div className="flex justify-start items-center gap-5 w-[70%] h-full cursor-pointer pl-8 ">
+    <div className="w-full md:w-[65%] h-20 bg-neutral-900/95 border border-white/10 fixed bottom-16 md:bottom-3 rounded-2xl md:rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex justify-between items-center px-4 md:px-6 z-50 backdrop-blur-xl">
+      {/* Song Info & Vinyl Artwork */}
+      <div className="flex justify-start items-center gap-3 w-[60%] md:w-[50%] h-full cursor-pointer">
         <div>
-          {/* Vinyl spin animation applied here */}
           <img
             src={songsData[index].image}
             alt=""
-            className={`w-15 h-15 md:h-20 md:w-20 rounded-full object-cover transition-all shadow-md ${
+            className={`w-12 h-12 md:h-14 md:w-14 rounded-full object-cover shadow-md border border-white/10 transition-all ${
               playingsong ? "animate-spin [animation-duration:8s]" : ""
             }`}
           />
         </div>
-        <div className="text-[20px] md:text-[25px] ">
-          <div className="text-black text-[1.1em] font-semibold truncate max-w-[150px] md:max-w-[250px]">
+        <div className="flex flex-col justify-center overflow-hidden">
+          <div className="text-white text-[14px] md:text-[16px] font-bold truncate max-w-[140px] md:max-w-[240px]">
             {songsData[index].name}
           </div>
-          <div className="text-gray-800 text-[0.6em] font-semibold truncate max-w-[150px] md:max-w-[250px]">
+          <div className="text-neutral-400 text-[11px] md:text-[13px] font-medium truncate max-w-[140px] md:max-w-[240px]">
             {songsData[index].singer}
           </div>
         </div>
       </div>
-      <div className="w-[20%] h-full md:flex justify-center items-center">
+
+      {/* Playback Controls (Previous, Play/Pause, Next) */}
+      <div className="flex justify-end md:justify-center items-center gap-4 md:gap-6 w-[35%] md:w-[40%] h-full text-white">
+        <MdOutlineSkipPrevious
+          className="w-6 h-6 md:w-7 md:h-7 text-neutral-300 hover:text-rose-500 transition-colors cursor-pointer hidden sm:block"
+          onClick={prevsong}
+        />
+
         {!playingsong ? (
-          <div className="w-12.5 h-12.5 rounded-full bg-black text-white flex justify-center items-center hover:bg-gray-600 transition-all cursor-pointer">
-            <FaPlay className="w-5 h-7" onClick={() => playsong()} />
+          <div
+            onClick={() => playsong()}
+            className="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 text-white flex justify-center items-center hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_4px_15px_rgba(244,63,94,0.4)]"
+          >
+            <FaPlay className="w-4 h-4 ml-0.5" />
           </div>
         ) : (
-          <div className="w-12.5 h-12.5 rounded-full bg-black text-white flex justify-center items-center hover:bg-gray-600 transition-all cursor-pointer">
-            <FaPause className="w-5 h-7" onClick={() => pausesong()} />
+          <div
+            onClick={() => pausesong()}
+            className="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 text-white flex justify-center items-center hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_4px_15px_rgba(244,63,94,0.4)]"
+          >
+            <FaPause className="w-4 h-4" />
           </div>
         )}
+
+        <GiNextButton
+          className="w-6 h-6 md:w-7 md:h-7 text-neutral-300 hover:text-rose-500 transition-colors cursor-pointer"
+          onClick={nextsong}
+        />
       </div>
     </div>
   );
