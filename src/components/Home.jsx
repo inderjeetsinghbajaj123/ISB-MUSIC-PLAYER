@@ -9,7 +9,6 @@ import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa";
 import Card from "./Card";
-import Player from "./Player";
 
 const Home = () => {
   let {
@@ -20,7 +19,6 @@ const Home = () => {
     playsong,
     pausesong,
     index,
-    setindex,
   } = useContext(datacontext);
   const [range, setrange] = useState(0);
   let progress = useRef(0);
@@ -49,147 +47,133 @@ const Home = () => {
     audioRef.current.currentTime = (duration * nextrange) / 100;
   }
 
+  const currentSong = songsData[index];
+
   return (
-    <div className="w-full h-dvh bg-black flex relative overflow-hidden">
+    <div className="w-full min-h-screen bg-gradient-to-b from-neutral-950 via-black to-neutral-950 flex flex-col relative overflow-hidden pb-40 pt-20 md:pt-28 px-4 md:px-16 gap-8">
       <FaCaretDown
-        className={`absolute text-white top-5.5 left-[1%] text-[30px] md:hidden cursor-pointer z-40 transition-transform ${arrow ? "-rotate-90" : ""}`}
+        className={`absolute text-white top-20 left-[4%] text-[28px] md:hidden cursor-pointer z-40 transition-transform ${arrow ? "-rotate-90" : ""}`}
         onClick={() => setarrow((prev) => !prev)}
       />
-      {!arrow ? (
-        <>
-          <div className="md:w-1/2 w-full h-full pt-14 sm:pt-18 md:pt-30 pb-32 md:pb-0 flex flex-col justify-start items-center gap-3 sm:gap-6">
-            <h1 className="text-white font-bold text-sm sm:text-base md:text-[20px] text-center px-10 sm:px-0">
-              Made with ❤️ by INDERJEET
-            </h1>
 
-            {/* Rotating Vinyl Record Artwork */}
-            <div className="w-52 h-52 sm:w-62.5 sm:h-62.5 max-w-[75vw] max-h-[75vw] object-fill relative rounded-full overflow-hidden shadow-2xl shrink-0">
-              <img
-                src={songsData[index].image}
-                alt=""
-                className={`w-full h-full object-cover transition-all ${
-                  playingsong ? "animate-spin [animation-duration:8s]" : ""
-                }`}
-              />
-              {playingsong ? (
-                <div className="w-full h-full bg-black absolute top-0 opacity-[0.3] rounded-full flex justify-center items-center pointer-events-none">
-                  <img src={gif} alt="" className="w-[40%] " />
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+      <div className="w-full relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/10 bg-neutral-900 flex flex-col md:flex-row items-center justify-between p-6 md:p-8">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <img
+            src={currentSong.image}
+            alt=""
+            className="w-full h-full object-cover blur-3xl opacity-30 scale-125"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
+        </div>
 
-            <div>
-              <div className="text-white text-2xl sm:text-[30px] font-bold text-center px-4 break-words">
-                {songsData[index].name}
-              </div>
-              <div className="text-gray-300 text-base sm:text-[18px] text-center px-4">
-                {songsData[index].singer}
-              </div>
-            </div>
-
-            {/* Custom Styled Audio Range Slider matching Player bar */}
-            <div className="w-[75%] md:w-1/2 flex justify-center items-center relative rounded-md">
-              <input
-                type="range"
-                className="appearance-none w-full h-1.75 rounded-md bg-zinc-700 accent-white cursor-pointer"
-                value={range}
-                id="range"
-                onChange={handrg}
-              />
-              <div
-                className={`bg-white h-full absolute left-0 rounded-md pointer-events-none`}
-                ref={progress}
-              ></div>
-            </div>
-
-            <div className="text-white flex justify-center items-center gap-5 ">
-              <MdOutlineSkipPrevious
-                className="w-7 h-7 hover:text-zinc-400 cursor-pointer transition-colors"
-                onClick={prevsong}
-              />
-              {!playingsong ? (
-                <div className="w-12.5 h-12.5 rounded-full bg-white text-black flex justify-center items-center hover:bg-zinc-200 transition-all cursor-pointer shadow-lg">
-                  <FaPlay
-                    className="w-5 h-5 ml-0.5"
-                    onClick={() => playsong()}
-                  />
-                </div>
-              ) : (
-                <div className="w-12.5 h-12.5 rounded-full bg-white text-black flex justify-center items-center hover:bg-zinc-200 transition-all cursor-pointer shadow-lg">
-                  <FaPause className="w-5 h-5" onClick={() => pausesong()} />
-                </div>
-              )}
-              <GiNextButton
-                className="w-7 h-7 hover:text-zinc-400 cursor-pointer transition-colors"
-                onClick={nextsong}
-              />
-            </div>
-          </div>
-
-          {/* Desktop Song List */}
-          <div className="hidden md:flex flex-col gap-4 w-full md:w-1/2 h-full pt-28 px-4 overflow-auto pb-32">
-            {songsData.map((song) => (
-              <Card
-                key={song.id}
-                name={song.name}
-                image={song.image}
-                singer={song.singer}
-                songIndex={song.id - 1}
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        /* Mobile Expanded View matching clean white mini-player bar design */
-        <div className="flex items-center flex-col gap-3 w-full md:w-[50%] mt-12 h-[calc(100%-3rem)] min-h-0 overflow-auto pb-32 relative px-3">
-          <div className="w-full bg-white text-black rounded-3xl p-3 sm:p-4 shadow-2xl flex items-center justify-between mb-1 shrink-0">
-            <div className="flex items-center gap-3">
-              <img
-                src={songsData[index].image}
-                alt=""
-                className="w-12 h-12 rounded-full object-cover shadow-md"
-              />
-              <div>
-                <div className="font-bold text-base text-black truncate max-w-[150px]">
-                  {songsData[index].name}
-                </div>
-                <div className="text-xs text-zinc-600 truncate max-w-[150px]">
-                  {songsData[index].singer}
-                </div>
-              </div>
-            </div>
-            {!playingsong ? (
-              <div
-                onClick={() => playsong()}
-                className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg hover:scale-105 transition-transform"
-              >
-                <FaPlay className="w-4 h-4 ml-0.5" />
-              </div>
-            ) : (
-              <div
-                onClick={() => pausesong()}
-                className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg hover:scale-105 transition-transform"
-              >
-                <FaPause className="w-4 h-4" />
+        <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 w-full md:w-2/3">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shadow-2xl border border-white/20 shrink-0 relative">
+            <img
+              src={currentSong.image}
+              alt=""
+              className={`w-full h-full object-cover transition-all ${
+                playingsong ? "animate-spin [animation-duration:10s]" : ""
+              }`}
+            />
+            {playingsong && (
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
+                <img src={gif} alt="" className="w-12 opacity-90" />
               </div>
             )}
           </div>
 
-          <div className="w-full flex flex-col gap-3">
-            {songsData.map((song) => (
+          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2 w-full">
+            <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-400 font-bold">
+              Featured Track
+            </span>
+            <h2 className="text-white text-2xl md:text-4xl font-extrabold tracking-tight truncate max-w-[280px] md:max-w-[450px]">
+              {currentSong.name}
+            </h2>
+            <p className="text-neutral-300 text-sm md:text-base font-medium">
+              {currentSong.singer}
+            </p>
+
+            <div className="w-full max-w-sm flex items-center gap-3 mt-2">
+              <span className="text-xs text-neutral-400">
+                {audioRef.current
+                  ? Math.floor(audioRef.current.currentTime / 60) +
+                    ":" +
+                    String(
+                      Math.floor(audioRef.current.currentTime % 60),
+                    ).padStart(2, "0")
+                  : "0:00"}
+              </span>
+              <div className="flex-1 flex justify-center items-center relative rounded-full bg-neutral-800 h-1.5 shadow-inner overflow-hidden cursor-pointer">
+                <input
+                  type="range"
+                  className="absolute inset-0 appearance-none w-full h-full opacity-0 cursor-pointer z-20"
+                  value={range}
+                  id="range"
+                  onChange={handrg}
+                />
+                <div
+                  className="bg-rose-500 h-full absolute left-0 rounded-full pointer-events-none z-10 shadow-[0_0_10px_rgba(244,63,94,0.6)]"
+                  ref={progress}
+                ></div>
+              </div>
+              <span className="text-xs text-neutral-400">3:30</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 flex items-center gap-4 mt-6 md:mt-0">
+          <button
+            onClick={prevsong}
+            className="p-3.5 rounded-2xl bg-black/40 border border-white/10 hover:border-rose-500/50 hover:bg-black/60 transition-all cursor-pointer text-white shadow-lg"
+          >
+            <MdOutlineSkipPrevious className="w-6 h-6" />
+          </button>
+
+          {!playingsong ? (
+            <button
+              onClick={() => playsong()}
+              className="w-16 h-16 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 text-white flex justify-center items-center hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(244,63,94,0.5)]"
+            >
+              <FaPlay className="w-6 h-6 ml-0.5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => pausesong()}
+              className="w-16 h-16 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 text-white flex justify-center items-center hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(244,63,94,0.5)]"
+            >
+              <FaPause className="w-6 h-6" />
+            </button>
+          )}
+
+          <button
+            onClick={nextsong}
+            className="p-3.5 rounded-2xl bg-black/40 border border-white/10 hover:border-rose-500/50 hover:bg-black/60 transition-all cursor-pointer text-white shadow-lg"
+          >
+            <GiNextButton className="w-6 h-6" />
+          </button>
+        </div>
+      </div>
+
+      <div className="w-full flex flex-col gap-4">
+        <h2 className="text-neutral-400 font-semibold text-xs uppercase tracking-wider px-2">
+          All Songs
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {songsData.map((song) => (
+            <div
+              key={song.id}
+              className="bg-neutral-900/40 hover:bg-neutral-900/80 border border-white/5 p-2 rounded-2xl transition-all shadow-lg backdrop-blur-sm"
+            >
               <Card
-                key={song.id}
                 name={song.name}
                 image={song.image}
                 singer={song.singer}
                 songIndex={song.id - 1}
               />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
